@@ -1,5 +1,7 @@
 package dev.rafaelcmr.vendas.models;
 
+import dev.rafaelcmr.vendas.enums.StatusPedido;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -23,14 +25,19 @@ public class Pedido {
     @Column(precision = 2)
     private BigDecimal total;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status")
+    private StatusPedido status;
+
     public Pedido() {
     }
 
-    public Pedido(Integer id, Cliente cliente, LocalDate dataPedido, BigDecimal total) {
+    public Pedido(Integer id, Cliente cliente, LocalDate dataPedido, BigDecimal total, StatusPedido status) {
         this.id = id;
         this.cliente = cliente;
         this.dataPedido = dataPedido;
         this.total = total;
+        this.status = status;
     }
 
     @Override
@@ -40,6 +47,7 @@ public class Pedido {
                 ", cliente=" + cliente +
                 ", dataPedido=" + dataPedido +
                 ", total=" + total +
+                ", status=" + status +
                 '}';
     }
 
@@ -81,5 +89,13 @@ public class Pedido {
 
     public void setItens(List<ItemPedido> itens) {
         this.itens = itens;
+    }
+
+    public StatusPedido getStatus() {
+        return status;
+    }
+
+    public void setStatus(StatusPedido status) {
+        this.status = status;
     }
 }
